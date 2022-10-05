@@ -42,12 +42,6 @@ rails db:migrate
 ```ruby
 class PasswordRollbackRequest < ApplicationRecord
   
-  #  Macros
-  # ============================================================================
-  #
-  require 'encoded_token'
-
-
   #  Constants
   # ============================================================================
   #
@@ -111,12 +105,7 @@ end
 
 ```ruby
 class PasswordRollbacksController < ApplicationController
-  #  Macros
-  # ============================================================================
-  #
-  require 'encoded_token'
-
-
+  
   #  Public Methods
   # ============================================================================
   #

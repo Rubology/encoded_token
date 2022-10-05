@@ -11,7 +11,7 @@
 [//]: # "#####                 BADGES                  #####"
 [//]: # "###################################################"
 
-[![Space Metric](https://rubology.testspace.com/spaces/191047/metrics/297597/badge?token=82860e711a5e75c1cba0859399f9015f262281d7)](https://rubology.testspace.com/spaces/191047/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)")
+[![Space Metric](https://rubology.testspace.com/spaces/191142/metrics/297614/badge?token=78437cc66eebc85bb735c369baa8f93fe15b0a2f)](https://rubology.testspace.com/spaces/191142/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)")
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license)
 [![Gem Version](https://badge.fury.io/rb/sanitized.svg)](https://badge.fury.io/rb/encoded_token)
 

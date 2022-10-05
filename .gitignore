@@ -1,0 +1,5 @@
+/coverage/
+/doc/
+
+# rspec failure tracking
+.rspec_status

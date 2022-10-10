@@ -197,7 +197,7 @@ efficient than adding both `:token` and `:expires_at` to the `User`
 model and adding yet more methods to the `UserController`.
 
 While this example uses the Ruby on Rails framework, **EncodedToken**
-is build in pure Ruby and is completely framework agnostic.
+is coded in pure Ruby and is completely framework agnostic.
 
 
 

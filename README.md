@@ -38,7 +38,7 @@
 - [Setup](#setup)
 - [Encoding](#encoding)
 - [Decoding](#decoding)
-- [Implementation Example](#example)
+- [Walkthrough Example](#example)
 - [Contributing](#contributing)
 - [Security Policy](SECURITY.md)
 - [Code of Conduct](#code-of-conduct)
@@ -249,7 +249,7 @@ EncodedToken.decode!(:test)
 
 
 <a name='example'></a>
-## Implementation Example
+## Walkthrough Example
 A complete walkthrough, showing the best way to use **EncodedToken** can
 be found in the [Password Rollback Example](EXAMPLE.md) file.
 

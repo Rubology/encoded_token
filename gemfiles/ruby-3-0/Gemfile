@@ -4,8 +4,11 @@
 
 source "https://rubygems.org"
 
+# specify ruby version
+ruby '~> 3.0.0'
+
 # Specify your gem's dependencies in encoded_token.gemspec
-gemspec
+gemspec :path => '../..'
 
 gem "rake"
 gem "rspec"

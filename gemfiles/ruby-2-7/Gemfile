@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
-# add linux platform with: bundle lock --add-platform x86_64-linux
+# add linux platform with: BUNDLE_GEMFILE=ruby-3-0.gemfile bundle lock --add-platform x86_64-linux
 
 source "https://rubygems.org"
 
+# specify ruby version
+ruby '~> 2.7.0'
+
 # Specify your gem's dependencies in encoded_token.gemspec
-gemspec
+gemspec :path => '../..'
 
 gem "rake"
 gem "rspec"
@@ -14,4 +17,4 @@ gem 'simplecov-cobertura'
 gem 'sdoc'
 gem 'puma'
 gem 'rubocop'
-gem "debug"
+

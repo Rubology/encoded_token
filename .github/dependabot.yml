@@ -1,0 +1,35 @@
+---
+
+version: 2
+
+updates:
+  - package-ecosystem: bundler
+    directory: /gemfiles/ruby-3-1
+    schedule:
+      interval: weekly
+    versioning-strategy: auto
+
+  - package-ecosystem: bundler
+    directory: /gemfiles/ruby-3-0
+    schedule:
+      interval: weekly
+    versioning-strategy: auto
+
+  - package-ecosystem: bundler
+    directory: /gemfiles/ruby-2-7
+    schedule:
+      interval: weekly
+    versioning-strategy: auto
+
+  - package-ecosystem: bundler
+    directory: /gemfiles/ruby-2-6
+    schedule:
+      interval: weekly
+    versioning-strategy: auto
+
+  - package-ecosystem: bundler
+    directory: /gemfiles/ruby-2-5
+    schedule:
+      interval: weekly
+    versioning-strategy: auto
+

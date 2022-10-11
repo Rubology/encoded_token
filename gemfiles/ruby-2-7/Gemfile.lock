@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ../..
   specs:
     encoded_token (1.0.2)
 
@@ -79,4 +79,4 @@ DEPENDENCIES
   simplecov-cobertura
 
 BUNDLED WITH
-   2.3.22
+   2.3.23

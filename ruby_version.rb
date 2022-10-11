@@ -66,7 +66,7 @@ module RubyVersion
 
 		# Returns the string filename for the current ruby version gemfile
 		def gemfile
-			"ruby_#{current.to_s.gsub('.','_')}.gemfile"
+			"gemfiles/ruby-#{current.to_s.gsub('.','-')}/Gemfile"
 		end
 
 

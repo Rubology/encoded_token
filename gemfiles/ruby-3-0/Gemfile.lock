@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ../..
   specs:
     encoded_token (1.0.2)
 
@@ -9,6 +9,7 @@ GEM
     ast (2.4.2)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    json (2.6.2)
     nio4r (2.5.8)
     parallel (1.22.1)
     parser (3.1.2.1)
@@ -36,16 +37,17 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
     rspec-support (3.11.1)
-    rubocop (1.28.2)
+    rubocop (1.36.0)
+      json (~> 2.3)
       parallel (~> 1.10)
-      parser (>= 3.1.0.0)
+      parser (>= 3.1.2.1)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
-      rexml
-      rubocop-ast (>= 1.17.0, < 2.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.20.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.17.0)
+    rubocop-ast (1.21.0)
       parser (>= 3.1.1.0)
     ruby-progressbar (1.11.0)
     sdoc (2.4.0)
@@ -63,7 +65,7 @@ GEM
     unicode-display_width (2.3.0)
 
 PLATFORMS
-  -darwin-21
+  arm64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -76,5 +78,8 @@ DEPENDENCIES
   simplecov
   simplecov-cobertura
 
+RUBY VERSION
+   ruby 3.0.4p208
+
 BUNDLED WITH
-   2.3.22
+   2.3.23

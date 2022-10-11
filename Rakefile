@@ -10,9 +10,9 @@ RSpec::Core::RakeTask.new(:spec)
 task default: :spec
 
 
-desc "Bundles the correct gemfile for the current version of ruby."
-task :bundle do
-  puts "Bundling '#{RubyVersion.gemfile}'"
+desc "Installs gems using the correct gemfile for the current version of ruby."
+task :install do
+  puts "Installing from '#{RubyVersion.gemfile}'"
   system("bundle --gemfile=#{RubyVersion.gemfile}")
   system("bundle lock --add-platform x86_64-linux --gemfile=#{RubyVersion.gemfile}")
 end

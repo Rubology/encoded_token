@@ -8,7 +8,7 @@
 4. Change to the most recent version of Ruby
 5. Install the most recent Bundler: `gem install bundler`
 6. Install the most recent Rake: `gem install rake`
-7. Install the gems: `rake bundle`
+7. Install the gems: `rake install`
 8. Ensure all the tests are passing: `rake`
 
 
@@ -41,7 +41,7 @@
 We test with every minor version of Ruby from 2.5 onwards. As some gems are only
 available for certain Ruby versions, we need to use seperate Gemfiles for each version.
 
-The task `rake bundle` will automatically select the correct gemfile to use and install the gems.
+The task `rake install` will automatically select the correct gemfile to use and install the gems.
 It also adds the `x86_64-linux` platform to the lockfile.
 
 

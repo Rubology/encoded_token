@@ -2,19 +2,19 @@
 
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
+require './ruby_version'
+
 
 RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
 
-desc "Bundles the correct gem version for the current version of ruby."
+desc "Bundles the correct gemfile for the current version of ruby."
 task :bundle do
-  segments = Gem::Version.new(RUBY_VERSION).segments
-  gemfile  = "ruby-#{segments[0]}-#{segments[1]}.gemfile"
-  puts "Bundling #{gemfile}"
-  system("bundle --gemfile=#{gemfile}")
-  system("bundle lock --add-platform x86_64-linux --gemfile=#{gemfile}")
+  puts "Bundling '#{RubyVersion.gemfile}'"
+  system("bundle --gemfile=#{RubyVersion.gemfile}")
+  system("bundle lock --add-platform x86_64-linux --gemfile=#{RubyVersion.gemfile}")
 end
 
 

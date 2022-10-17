@@ -36,13 +36,19 @@
 
 
 
-## Bundling
+## GEMS
 
 We test with every minor version of Ruby from 2.5 onwards. As some gems are only
 available for certain Ruby versions, we need to use seperate Gemfiles for each version.
 
-The task `rake install` will automatically select the correct gemfile to use and install the gems.
+The task `rake install` automatically selects the correct gemfile to use and runs `bundle install`.
 It also adds the `x86_64-linux` platform to the lockfile.
+
+The task `rake outdated` automatically selects the correct gemfile to use and runs `bundle outdated` 
+
+The task `rake update` automatically selects the correct gemfile to use and runs `bundle update` 
+
+**Note**: Development gems are only available in the latest version of Ruby.
 
 
 ## Coverage

@@ -36,6 +36,10 @@ end
 
 desc "Opens the coverage results in the default browser."
 task :coverage do
+  unless RubyVersion.latest?
+    fail "\nCoverage only available in Ruby #{RubyVersion.latest_version}\n\n"
+  end
+
   ENV["COVERAGE"] = 'true'
   Rake::Task[:spec].invoke
 
@@ -48,6 +52,10 @@ end
 
 desc "Generates the Sdoc files & opens them in the default browser."
 task :doc do
+  unless RubyVersion.latest?
+    fail "\nDocs only available in Ruby #{RubyVersion.latest_version}\n\n"
+  end
+
   `sdoc -e "UTF-8" --title 'EncodedToken' --main README.md -T 'rails' -x 'encoded_token/rspec/*' README.md CODE_OF_CONDUCT.md DEVELOPER_GUIDE.md EXAMPLE.md lib`
   # `open doc/index.html`
   `open http://localhost:9292`
@@ -64,6 +72,10 @@ end
 
 desc "starts a rackup server for the docs."
 task :doc_server do
+  unless RubyVersion.latest?
+    fail "\nDoc Server only available in Ruby #{RubyVersion.latest_version}\n\n"
+  end
+
   `rackup doc_server.ru`
 end
 
@@ -71,13 +83,17 @@ end
 
 desc "Runs 'rubocop' on the 'lib' directory, auto-correcting appropved cops."
 task :rubo do
+  unless RubyVersion.latest?
+    fail "\nRubocop only available in Ruby #{RubyVersion.latest_version}\n\n"
+  end
+
   corrections = [
                   'Layout/TrailingWhitespace',
                   'Layout/EmptyLinesAroundClassBody',
                   'Layout/EmptyLinesAroundModuleBody',
                   'Layout/EmptyLineBetweenDefs'
                 ]
-  system "bundle exec rubocop --autocorrect --only #{corrections.join(',')} lib/"
+  system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec rubocop --autocorrect --only #{corrections.join(',')} lib/"
 end
 
 

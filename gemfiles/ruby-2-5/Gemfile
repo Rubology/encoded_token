@@ -12,9 +12,4 @@ gemspec :path => '../..'
 
 gem "rake"
 gem "rspec"
-gem 'simplecov'
-gem 'simplecov-cobertura'
-gem 'sdoc'
-gem 'puma'
-gem 'rubocop'
 

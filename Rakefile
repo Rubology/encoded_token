@@ -18,6 +18,22 @@ end
 
 
 
+desc "Runs bundle outdated for the current version of ruby."
+task :outdated do
+  puts "Checking outdated for '#{RubyVersion.gemfile}'"
+  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle outdated")
+end
+
+
+
+desc "Runs bundle update for the current version of ruby."
+task :update do
+  puts "Updating for '#{RubyVersion.gemfile}'"
+  system("BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle update")
+end
+
+
+
 desc "Opens the coverage results in the default browser."
 task :coverage do
   ENV["COVERAGE"] = 'true'

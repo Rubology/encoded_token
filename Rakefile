@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
-require "rspec/core/rake_task"
 require './ruby_version'
 
+task default: :test
 
-RSpec::Core::RakeTask.new(:spec)
 
-task default: :spec
+desc "Runs the latest tests."
+task :test do
+  require "rspec/core/rake_task"
+  RSpec::Core::RakeTask.new(:spec)
+  Rake::Task[:spec].invoke
+end
+
 
 
 desc "Installs gems using the correct gemfile for the current version of ruby."
@@ -36,6 +41,9 @@ end
 
 desc "Opens the coverage results in the default browser."
 task :coverage do
+  require "rspec/core/rake_task"
+  RSpec::Core::RakeTask.new(:spec)
+
   unless RubyVersion.latest?
     fail "\nCoverage only available in Ruby #{RubyVersion.latest_version}\n\n"
   end
@@ -50,33 +58,21 @@ end
 
 
 
-desc "Generates the Sdoc files & opens them in the default browser."
+desc "Generates the Yard documentation & opens it in the default browser."
 task :doc do
   unless RubyVersion.latest?
     fail "\nDocs only available in Ruby #{RubyVersion.latest_version}\n\n"
   end
 
-  `sdoc -e "UTF-8" --title 'EncodedToken' --main README.md -T 'rails' -x 'encoded_token/rspec/*' README.md CODE_OF_CONDUCT.md DEVELOPER_GUIDE.md EXAMPLE.md lib`
-  # `open doc/index.html`
-  `open http://localhost:9292`
+  `yardoc`
+  `open doc/index.html`
 end
 
 
 
-desc "Generates the Sdoc files & opens them in the default browser. (alias for :doc)"
+desc "Generates the Yard documentation & opens it in the default browser. (alias for :doc)"
 task :docs do
   Rake::Task["doc"].invoke
-end
-
-
-
-desc "starts a rackup server for the docs."
-task :doc_server do
-  unless RubyVersion.latest?
-    fail "\nDoc Server only available in Ruby #{RubyVersion.latest_version}\n\n"
-  end
-
-  `rackup doc_server.ru`
 end
 
 

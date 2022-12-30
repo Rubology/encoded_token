@@ -40,7 +40,9 @@ class EncodedToken
   #  Public Instance Methods
   # ======================================================================
 
-  # This is an abstract class, so ensure no instantiation
+  ##
+  # This is an abstract class, so we ensure no instantiation
+  #
   def initialize # :nodoc:
     raise NotImplementedError.new("SecureToken is an abstract class and cannot be instantiated.")
   end

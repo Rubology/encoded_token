@@ -1,52 +1,33 @@
 # frozen_string_literal: true
 
-##
-# EncodedToken::Base
-#
-# The core configuration settings used for encoding and decoding, along
-# with the methods for initialization and verification.
-#
-# Encoding is achived though a variation of Alberti's cipher for
-# multiple Ciphertext Alphabets.
-# (https://en.wikipedia.org/wiki/Alberti_cipher
-#
 class EncodedToken
+  ##
+  # EncodedToken::Base
+  #
+  # The core configuration settings used for encoding and decoding, along
+  # with the methods for initialization and verification.
+  #
+  # Encoding is achieved using a variation of Alberti's cipher for
+  # multiple Ciphertext Alphabets.
+  # (https://en.wikipedia.org/wiki/Alberti_cipher)
+  #
   module Base
-
-    # ======================================================================
-    #  Configuration
-    # ======================================================================
-
-    HEX_NUMS         = ('0'..'9').to_a
-    HEX_CHARS        = ('a'..'f').to_a + ('A'..'F').to_a
-    SPECIAL_CHARS    = ['-']
-    HEX_TEXT         = (HEX_NUMS + HEX_CHARS + SPECIAL_CHARS).join # :nodoc:
-
-    CIPHER_CHARS     = ('0'..'9').to_a + ('a'..'z').to_a + ('A'..'Z').to_a
-    CIPHER_TEXT      = CIPHER_CHARS.join # :nodoc:
-    CIPHER_COUNT     = 16 # :nodoc:
-    TARGET_SIZE      = 55 # :nodoc:
-
-    private_constant :HEX_NUMS, :HEX_CHARS, :SPECIAL_CHARS, :CIPHER_CHARS
-
-    @@seed           = nil
-    @@ciphers        = nil
-    @@keylist        = nil
-
-
 
     # ======================================================================
     #  Public Methods
     # ======================================================================
 
     ##
-    # Sets the seed to be used in generating a random encoding
+    # Sets the seed used to generate random cyphers.
     #
-    # [returns:]
-    #    - true on success
+    # @param [Integer, Integer.to_s] new_seed
+    #   the seed used for the random number generator when encoding or deconding.
     #
-    # [on error:]
-    #    - raises an exception
+    # @return [TrueClass]
+    #   <code>true</code> on success.
+    #
+    # @raise
+    #   an exception on failure.
     #
     def seed=(new_seed)
       if @@seed
@@ -59,16 +40,43 @@ class EncodedToken
     end
 
 
-
     # ======================================================================
-    #  Class Private Methods
+    #  Class Private
     # ======================================================================
     private
 
 
-    # parse the new seed to ensure it is an integer
+    # ======================================================================
+    #  Class Private Configuration
+    # ======================================================================
+
+    HEX_NUMS         = ('0'..'9').to_a
+    HEX_CHARS        = ('a'..'f').to_a + ('A'..'F').to_a
+    SPECIAL_CHARS    = ['-']
+    HEX_TEXT         = (HEX_NUMS + HEX_CHARS + SPECIAL_CHARS).join
+
+    CIPHER_CHARS     = ('0'..'9').to_a + ('a'..'z').to_a + ('A'..'Z').to_a
+    CIPHER_TEXT      = CIPHER_CHARS.join
+    CIPHER_COUNT     = 16
+    TARGET_SIZE      = 55
+
+    @@seed           = nil
+    @@ciphers        = nil
+    @@keylist        = nil
+
+
+    # ======================================================================
+    #  Class Private Methods
+    # ======================================================================
+
+    ##
+    # Parses the new seed to ensure it is an Integer.
     #
-    # return the Integer seed on success, otherwise raises an error
+    # @param [Integer, Integer.to_s] new_seed
+    #   the seed to parse.
+    #
+    # @return [Integer]
+    #   the seed converted to a absolute <code>Integer</code>.
     #
     def parse_seed(new_seed)
       if valid_integer?(new_seed)
@@ -80,9 +88,12 @@ class EncodedToken
 
 
 
-    # Generate a set of ciphers
+    ##
+    # Generates a random set of ciphers based on the configured seed.
     #
-    # returns - a Hash of ciphers with a CIPHER_CHARS character for each key
+    # @return [Hash]
+    #   a <code>Hash</code> of ciphers with a <code>CIPHER_CHARS</code>
+    #   character for each key.
     #
     def generate_ciphers
       ciphers = {}
@@ -104,20 +115,32 @@ class EncodedToken
 
 
 
-    # return the next cypher key after the given key, looping to the first when required
+    ##
+    # Selects the next cypher key after the given key, looping to the first when required.
+    #
+    # @param [Character] key
+    #   the current cipher key.
+    #
+    # @return
+    #   the next cypher key, looping to the first when required.
+    #
     def rotate_cipher_key(key)
       idx             = __keylist.index(key) + 1
       __keylist[idx] || __keylist.first
     end
 
 
-
     #  Validity
     # ======================================================================
 
-    # checks if the seed had been set
-    #   - returns true if the seed is set
-    #   - set the seed if missing and a valid ENV['ENCODED_TOKEN_SEED'] is present
+    ##
+    # Sets the seed from <code>ENV['ENCODED_TOKEN_SEED']</code> if not already set.
+    #
+    # @return [TrueClass]
+    #   <code>true</code> if the seed is set.
+    #
+    # @raise [RuntimeError]
+    #   if the seed is blank and no <code>ENV['ENCODED_TOKEN_SEED']</code> exists.
     #
     def assert_valid_seed!
       case
@@ -136,7 +159,15 @@ class EncodedToken
 
 
 
-    # check ENV['ENCODED_TOKEN_SEED'] is a string integer
+    ##
+    # Asserts that ENV['ENCODED_TOKEN_SEED'] is a string integer.
+    #
+    # @return [TrueClass]
+    #   <code>true</code> if valid.
+    #
+    # @raise RuntimeError
+    #   if <code>ENV['ENCODED_TOKEN_SEED']</code> is not a valid integer.
+    #
     def assert_valid_env!
       begin
         if valid_integer?(ENV['ENCODED_TOKEN_SEED'])
@@ -151,14 +182,29 @@ class EncodedToken
 
 
 
-    # Return true if the given String only contains hex text
+    ##
+    # Assert the given <code>String</code> only contains hexadecimal characters.
+    #
+    # @param [String] val
+    #   the string to test.
+    #
+    # @return [TrueClass, FalseClass]
+    #   <code>true</code> if a hexidecimal string, otherwise <code>false</code>.
+    #
     def valid_hex_text?(val)
       (val.chars - __hex_text.chars).empty?
     end
 
 
 
-    # returns true if the given id is is an integer, else false
+    ##
+    # Asserts the given parameter is an <code>Integer</code> or <code>Integer.to_s</code>.
+    #
+    # @param [Integer, String] id
+    #   the value to test.
+    #
+    # @return [TrueClass,FalseClass]
+    #   <code>true</code> if an integer value, otherwise <code>false</code>.
     #
     # id - and Inetger or String
     #
@@ -171,16 +217,31 @@ class EncodedToken
 
 
 
-    # Return true if the given String only contains cipher text text
+    ##
+    # Assert the given String only contains cipher-text characters.
+    #
+    # @param [String] val
+    #   the <code>String</code> to test.
+    #
+    # @return
+    #   <code>true</code> if the given parameter only contains cipher-text
+    #   characters, otherwise <code>false</code>.
+    #
     def valid_token_text?(val)
       (val.chars - __cipher_text.chars).empty?
     end
 
 
 
-    # returns true if the given id is a UUID, else false
+    ##
+    # Asserts the given parameter is a UUID.
     #
-    # id - String uuid
+    # @param [String] id
+    #   the UUID to test.
+    #
+    # @return [TrueClass,FalseClass]
+    #   <code>true</code> if the given id is a UUID,
+    #   otherwise <code>false</code>.
     #
     def valid_uuid_format?(id)
       uuid_regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
@@ -194,49 +255,63 @@ class EncodedToken
     #  Configuration Attributes
     # ======================================================================
 
-    # return the number of ciphers
+    ##
+    # @return [Integer] the number of ciphers.
+    #
     def __cipher_count
       CIPHER_COUNT
     end
 
 
 
-    # return the cipher keylist
+    ##
+    # @return [Array] the cipher keylist.
+    #
     def __keylist
       @@keylist
     end
 
 
 
-    # return the constant cypher text
+    ##
+    # @return [Array] the constant cypher text.
+    #
     def __cipher_text
       CIPHER_TEXT
     end
 
 
 
-    # return the base ciphers hash
+    ##
+    # @return [Hash] the base ciphers.
+    #
     def __ciphers
       @@ciphers
     end
 
 
 
-    # return the constant hex text
+    ##
+    # @return [String] the constant hex text.
+    #
     def __hex_text
       HEX_TEXT
     end
 
 
 
-    # return seed
+    ##
+    # @return [Integer] the configured seed.
+    #
     def __seed
       @@seed
     end
 
 
 
-    # return the target size
+    ##
+    # @return [Integer] the new token target size.
+    #
     def __target_size
       TARGET_SIZE
     end
@@ -246,7 +321,9 @@ class EncodedToken
     #  Error Messages
     # ======================================================================
 
-    # error: invalid ID supplied
+    ##
+    # @raise [ArguementError] for invalid ID arguement.
+    #
     def fail_with_invalid_id_argument
       fail_with ArgumentError,
                 ":id must be an Integer, a String integer or a String UUID."
@@ -254,7 +331,9 @@ class EncodedToken
 
 
 
-    # error: Seed is already set
+    ##
+    # @raise [ArguementError] if the seed is already set.
+    #
     def fail_with_seed_already_set
       fail_with ArgumentError,
                 "EncodedToken seed has alreay been set to #{@@seed}."
@@ -262,7 +341,9 @@ class EncodedToken
 
 
 
-    # error: invalid Seed supplied
+    ##
+    # @raise [ArguementError] if an invalid seed is supplied.
+    #
     def fail_with_invalid_seed_argument
       fail_with ArgumentError,
                 ":seed must be an Integer, preferably with at least 5 digits."
@@ -270,7 +351,18 @@ class EncodedToken
 
 
 
-    # default error message header
+    ##
+    # Default error message header
+    #
+    # @param [^Error] error_klass
+    #   the error class to fail with.
+    #
+    # @param [String] message
+    #   the error message to fail with.
+    #
+    # @raise [^Error]
+    #   the given error class and message.
+    #
     def fail_with(error_klass, message)
       fail error_klass, "\n\nERROR :=> EncodedToken: #{message}\n\n"
     end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-##
-# EncodedToken::Encoder
-#
-# The methods required to decode a token.
-#
-class EncodedToken # :nodoc:
+class EncodedToken
+  ##
+  # EncodedToken::Encoder
+  #
+  # This module contains the methods for decoding a token.
+  #
   module Decoder
 
     # ======================================================================
@@ -13,20 +13,18 @@ class EncodedToken # :nodoc:
     # ======================================================================
 
     ##
-    # Decode a previously encoded token to return the original ID
+    # Decodes a previously encoded token to return the original ID.
     #
-    # [args:]
-    #   - *token* [String]
+    # @param [String] token
+    #   a previously encoded token.
     #
-    # [returns:]
-    #   - a String with the original ID
+    # @return [String]
+    #   the original record ID.
     #
-    # [on error:]
-    #   - an invalid String token returns +nil+
-    #   - otherwise an exception will be raised
+    # @raise [RuntimeError]
+    #   with an invalid parameter.
     #
-    # *examples:*
-    #
+    # @example
     #   EncodedToken.decode!("KY3bnaRGmyy6yJS3imWr1dcWtzDYvZjpIAYyCUo5PEKPFvQgtTTed")
     #   #=> "12345"
     #
@@ -59,19 +57,15 @@ class EncodedToken # :nodoc:
 
 
     ##
-    # Decode a previously encoded token to return the original ID
+    # Decodes a previously encoded token to return the original ID.
     #
-    # [args:]
-    #   - *token* [String]
+    # @param [String] token
+    #   a previously encoded token.
     #
-    # [returns:]
-    #   - a String with the original ID
+    # @return [String, NilClass]
+    #   the original record ID if valid, otherwise <code>nil</code>.
     #
-    # [on error:]
-    #   - returns +nil+
-    #
-    # *examples:*
-    #
+    # @example
     #   EncodedToken.decode("KY3bnaRGmyy6yJS3imWr1dcWtzDYvZjpIAYyCUo5PEKPFvQgtTTed")
     #   #=> "12345"
     #
@@ -101,16 +95,21 @@ class EncodedToken # :nodoc:
     private
 
 
-    # ensures the given token is valid to decode
+    ##
+    # Ensures the given token is valid to decode.
     #
-    # token [String] - a properly encoded String
+    # @param [String] token
+    #   a properly encoded <code>String</code>.
     #
-    # returns - a String duplicate of the given token
+    # @return [String]
+    #   a <code>String</code> duplicate of the given token.
     #
-    # on error: - a RuntimeError is raised
+    # @raise [RuntimeError]
+    #   on error.
     #
-    # NOTE: - we return a duplicate so the original is not changed later
-    #         in the process when shifting segments
+    # @note
+    #   We return a duplicate so the original is not changed later
+    #   in the process when shifting segments.
     #
     def sanitize_token(token)
       fail 'Token is not a string.'   unless token.is_a?(String)
@@ -121,11 +120,14 @@ class EncodedToken # :nodoc:
 
 
 
-    # Parses the token to retrieve the original ID
+    ##
+    # Parses the token to retrieve the original ID.
     #
-    # token [String] - the encoded token
+    # @param [String] token
+    #   the encoded tokevln.
     #
-    # returns [String] - the original ID
+    # @return [String]
+    #   the original ID.
     #
     def parse_token(token)
       key      = token[0]
@@ -138,10 +140,14 @@ class EncodedToken # :nodoc:
 
 
 
-    # returns the Integer size of the id
+    ##
+    # Returns the Integer size of the id.
     #
-    # enc_size - the encrypted ID
-    # key      - the cipher key to use
+    # @param [String] enc_size
+    #   the encrypted ID.
+    #
+    # @param [Character] key
+    #   the cipher key to use.
     #
     def decrypt_size(enc_size, key)
       decrypt(enc_size, key).hex
@@ -149,13 +155,23 @@ class EncodedToken # :nodoc:
 
 
 
-    # decrypt the id using the cipher text from the given key.
-    # - rotate the cipher every character
+    ##
+    # Decrypts the id using the cipher text from the given key.
     #
-    # enc_id - encoded String ID
-    # key    - base cipher key to use
+    # @param [String] enc_id
+    #   the encoded ID.
     #
-    # on error - rasies an exception (invalid cipher chars, etc)
+    # @param [Character] key
+    #   the base cipher key to use.
+    #
+    # @return [String]
+    #   the original record ID.
+    #
+    # @raise
+    #   an exception on any error, such as invalid cipher chars, etc.
+    #
+    # @note
+    #   The cipher is rotated with every character.
     #
     def decrypt(enc_id, key)
       id      = ""

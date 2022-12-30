@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
-
-##
-# EncodedToken version details
-#
-class EncodedToken # :nodoc:
+class EncodedToken
 
   ##
   # The EncodedToken gem version.
   #
-  # [returns:]
-  #   - the version of the currently loaded EncodedToken as a <tt>Gem::Version</tt>
+  # @return [Gem::Version]
+  #   the version of the currently loaded EncodedToken as a <tt>Gem::Version</tt>
   #
   def self.gem_version
     Gem::Version.new VERSION::STRING
@@ -18,7 +14,7 @@ class EncodedToken # :nodoc:
 
 
 
-  module VERSION # :nodoc: all
+  module VERSION
 
     MAJOR = 1
     MINOR = 0

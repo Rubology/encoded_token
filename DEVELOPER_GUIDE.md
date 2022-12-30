@@ -21,11 +21,10 @@
 4. Run the tests: `rake`
 5. Check your new code is 100% tested: `rake coverage`
 6. Check your coding style passes: `rake rubo`
-7. Start the doc server: `rake doc_server`
-8. Check your documentation reads well: `rake docs`
-9. Check that all the test pass with the latest version of Ruby
-10. Check that all the test pass with each minor version of Ruby from 2.5 up
-11. Commit your changes `git commit -am 'My New Feature'`
+7. Check your documentation reads well: `rake docs`
+8. Check that all the test pass with the latest version of Ruby
+9. Check that all the test pass with each minor version of Ruby from 2.5 up
+10. Commit your changes `git commit -am 'My New Feature'`
 
 
 
@@ -39,9 +38,10 @@
 ## GEMS
 
 We test with every minor version of Ruby from 2.5 onwards. As some gems are only
-available for certain Ruby versions, we need to use seperate Gemfiles for each version.
+available for certain Ruby versions, we require a seperate Gemfile for each version.
 
-The task `rake install` automatically selects the correct gemfile to use and runs `bundle install`.
+The task `rake install` automatically selects the correct gemfile to use, based on your 
+current ruby version, and runs `bundle install`.
 It also adds the `x86_64-linux` platform to the lockfile.
 
 The task `rake outdated` automatically selects the correct gemfile to use and runs `bundle outdated` 
@@ -53,7 +53,7 @@ The task `rake update` automatically selects the correct gemfile to use and runs
 
 ## Coverage
 
-We use [SimpleCov](https://github.com/simplecov-ruby/simplecov) to ensure
+We use [SimpleCov](https://github.com/simplecov-ruby/simplecov) to verify
 test coverage for every line of code. Ensure your test coverage is at 100%
 before submitting a Pull request.
 
@@ -61,14 +61,12 @@ The coverage report can be generated and opened with: `rake coverage`
 
 
 
-## SDoc
+## Yard
 
-We use [SDoc](https://github.com/zzak/sdoc) to produce the documentation.
+We use [Yard](https://yardoc.org) to produce the documentation.
 Ensure your method comments match the existing style.
 
 Documentation can be generated and opened with: `rake docs`
-
-Note: a simple rack server is required for SDoc documentation. Start it with `rake doc_server`
 
 
 

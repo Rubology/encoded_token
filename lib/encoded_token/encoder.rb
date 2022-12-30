@@ -1,42 +1,47 @@
 # frozen_string_literal: true
 
-##
-# EncodedToken::Encoder
-#
-# The methods required to encode a token with an Integer ID or String UUID.
-#
-class EncodedToken # :nodoc:
+class EncodedToken
+  ##
+  # EncodedToken::Encoder
+  #
+  #   This module contains the methods for encoding a database record ID (numeric or UUID)
+  #   to a web-safe, variable-length String token.
+  #
   module Encoder
 
     #  Public Methods
     # ======================================================================
 
     ##
-    # Generates a Secure Token from the given ID
+    # Generates a web-safe Secure Token from the given ID.
     #
-    # [args:]
-    #   - *id* [Integer, String] - the ID or UUID to encode
-    #   - eg. 12345, "12345", "468a5eeb-0cda-4c99-8dba-6a96c33003e0"
+    # @param [Integer, String] id
+    #   the record ID (numeric or UUID) to encode.
     #
-    # [returns:]
-    #   - a web-safe, variable length String of alphanumeric characters
+    # @return [String]
+    #   a web-safe, variable length <code>String</code> of alphanumeric characters
     #
-    # [on error:]
-    #   - raises an exception based on the error
+    # @raise [RuntimeError]
+    #   with an invalid parameter.
     #
-    # *examples:*
+    #   Exceptions raised are specific to the failure,
+    #   with a backtrace to the failing line of code.
     #
+    #   Providing an invalid record ID indicates there is a major problem
+    #   with the calling application, so we raise an Exception.
+    #
+    # @example
     #   EncodedToken.encode!(12345)
-    #   # => "KY3bnaRGmyy6yJS3imWr1dcWtzDYvZjpIAYyCUo5PEKPFvQgtTTed"
+    #   #=> "KY3bnaRGmyy6yJS3imWr1dcWtzDYvZjpIAYyCUo5PEKPFvQgtTTed"
     #
     #   EncodedToken.encode!("12345")
-    #   # => "3gDwO7r4UJYeBYDBLU94MqjZQm0SToSE29ACDNcw0xf4QusZKxQHJ"
+    #   #=> "3gDwO7r4UJYeBYDBLU94MqjZQm0SToSE29ACDNcw0xf4QusZKxQHJ"
     #
     #   EncodedToken.encode!("468a5eeb-0cda-4c99-8dba-6a96c33003e0")
-    #   # =>  "pAi1SmpKgFAchh76EoLbYLeXVQmLwmMlH2v1zDVeufioKGr0709Qw"
+    #   #=>  "pAi1SmpKgFAchh76EoLbYLeXVQmLwmMlH2v1zDVeufioKGr0709Qw"
     #
     #   EncodedToken.encode!(:test)
-    #   # =>  EncodedToken: :id must be an Integer, a String integer or a String UUID. (RuntimeError)
+    #   #=>  EncodedToken: :id must be an Integer, a String integer or a String UUID. (RuntimeError)
     #
     def encode!(id)
       assert_valid_seed!
@@ -47,32 +52,32 @@ class EncodedToken # :nodoc:
 
 
     ##
-    # Generates a Secure Token from the given ID
+    # Generates a web-safe Secure Token from the given ID.
     #
-    # [args:]
-    #   - *id* [Integer, String] - the ID or UUID to encode
-    #     - eg. 12345, "12345", "468a5eeb-0cda-4c99-8dba-6a96c33003e0"
+    # @param [Integer, String] id
+    #   the record ID (numeric or UUID) to encode.
     #
-    # [returns:]
-    #   - a web-safe, variable length String of alphanumeric characters
+    # @return [String]
+    #   a web-safe, variable length <code>String</code> of alphanumeric characters.
     #
-    # [on error:]
-    #   - raises an ArgumentError
+    # @raise [ArgumentError]
+    #   with an invalid parameter.
     #
-    # *examples:*
+    #   Providing an invalid record ID indicates there is a major problem
+    #   with the calling application, so we raise an Exception.
     #
+    # @example
     #   EncodedToken.encode(12345)
-    #   # => "KY3bnaRGmyy6yJS3imWr1dcWtzDYvZjpIAYyCUo5PEKPFvQgtTTed"
+    #   #=> "KY3bnaRGmyy6yJS3imWr1dcWtzDYvZjpIAYyCUo5PEKPFvQgtTTed"
     #
     #   EncodedToken.encode("12345")
-    #   # => "3gDwO7r4UJYeBYDBLU94MqjZQm0SToSE29ACDNcw0xf4QusZKxQHJ"
+    #   #=> "3gDwO7r4UJYeBYDBLU94MqjZQm0SToSE29ACDNcw0xf4QusZKxQHJ"
     #
     #   EncodedToken.encode("468a5eeb-0cda-4c99-8dba-6a96c33003e0")
-    #   # =>  "pAi1SmpKgFAchh76EoLbYLeXVQmLwmMlH2v1zDVeufioKGr0709Qw"
+    #   #=>  "pAi1SmpKgFAchh76EoLbYLeXVQmLwmMlH2v1zDVeufioKGr0709Qw"
     #
     #   EncodedToken.encode(:test)
-    #   # =>  EncodedToken: :id must be an Integer, a String integer or a String UUID. (RuntimeError)
-    #
+    #   #=>  EncodedToken: :id must be an Integer, a String integer or a String UUID. (ArgumentError)
     #
     def encode(id)
       encode!(id)
@@ -90,15 +95,17 @@ class EncodedToken # :nodoc:
 
 
 
-    # ensures the given ID is valid to encode
+    ##
+    # Ensures the given ID is valid to encode.
     #
-    # id - an Integer, numerical String integer or UUID
-    #    - max size of 255 characters
-    #    - contain only hex charatacters + '-'
+    # @param [Integer, String] id
+    #   the record ID to encode - max: 255characters - only hex characters + '-'
     #
-    # returns - true if valid
+    # @return [TrueClass, FalseClass]
+    #   <code>true</code> if a valid id provided, else <code>false</code>
     #
-    # on error: - an ArgumentError is raised
+    # @raise [ArguementError]
+    #   if the provided id is invalid
     #
     def assert_valid_id!(id)
       sid = id.to_s
@@ -116,13 +123,17 @@ class EncodedToken # :nodoc:
 
 
 
-    # generates the token
+    ##
+    # Generates the encrypted token.
     #
-    # id - Integer, String integer or String UUID
+    # @param [Integer, String] id
+    #   the record ID to encode.
     #
-    # returns - an alphanumeric String token
+    # @return [String]
+    #   a web-safe, variable-length alphanumeric string.
     #
-    # Note - token comprises [key, id_size, left_padding, enc_id, right_padding]
+    # @note
+    #   Token composition is [key, id_size, left_padding, enc_id, right_padding].
     #
     def generate_token(id)
       # stringify the id
@@ -150,11 +161,20 @@ class EncodedToken # :nodoc:
 
 
 
-    # return the encrypted size of the id
+    ##
+    # Encrypt the size of the id as a 2-char hex string.
     #
-    # returns a 2-character String
+    # @param [String] id
+    #   the encrypted record id.
     #
-    # note - we convert to hex to allow for strings up to 255 chars
+    # @param [Character] key
+    #   the starting key for the rotating cypher.
+    #
+    # @return [String]
+    #   a 2-character hexadecimal string.
+    #
+    # @note
+    #   We convert to hex to allow for strings up to 255 chars.
     #
     def encrypt_size(id, key)
       hex_size = id.size.to_s(16).rjust(2, '0')
@@ -164,8 +184,20 @@ class EncodedToken # :nodoc:
 
 
 
-    # encrypt the id using the cipher text from the given key.
-    # - rotate the cipher every character to avoid sequential valuies like id: 1000
+    ##
+    # Encrypt the id using the cipher text from the given key.
+    #
+    # @param [String] id
+    #   the encrypted record id.
+    #
+    # @param [Character] key
+    #   the starting key for the rotating cypher.
+    #
+    # @return [String]
+    #   the encrypted id.
+    #
+    # @note
+    #   We rotate the cipher every character to avoid sequential values like id: 1000.
     #
     def encrypt(id, key)
       enc_id       = []
@@ -183,7 +215,14 @@ class EncodedToken # :nodoc:
 
 
 
-    # generate a String of alphanumeric characters ot the given size
+    ##
+    # Generate a String of alphanumeric characters ot the given size.
+    #
+    # @param [Integer] size
+    #   the required number of random characters.
+    #
+    # @return [String]
+    #   a string with the required number of random characters.
     #
     def random_characters(size)
       SecureRandom.alphanumeric(size)

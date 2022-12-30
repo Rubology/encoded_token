@@ -15,8 +15,8 @@ a new password.
 4. We've set our environment variable: `ENCODED_TOKEN_SEED="12345"`
 5. Our link route is: `get '/password_rollbacks/:token', to: 'password_rollbacks#show'`.
 6. Our reset route is: `patch '/password_rollbacks/:token', to: 'password_rollbacks#update'`
-7. To improve security we don't want to use our user's id in the token.
-8. To conserve memory usage we don't want the token and expiry time within our User model. 
+7. To improve security we don't want our user's id to appear in the token.
+8. To conserve memory usage we don't want to store the token and expiry time within our User model. 
 
 _Note: We won't cover every line of code, only those where EncodedToken are relevant._
 
@@ -42,33 +42,28 @@ rails db:migrate
 ```ruby
 class PasswordRollbackRequest < ApplicationRecord
   
-  #  Constants
+  #  Meta
   # ============================================================================
   #
+
   MINUTES_ACTIVE_FOR = 60
 
-
-  #  Callbacks
-  # ============================================================================
-  #
   after_commit :generate_token!, on: :create
-
-
-  #  Associations
-  # ============================================================================
-  #
-  belongs_to :user
+  belongs_to   :user
 
 
   #  Public Methods
   # ============================================================================
   #
 
+  ##
   # Check the test_token is correct and the record is still active.
   #
-  # test_token - a String of alphanumeric characters
+  # @param [String] test_token
+  #   a String of alphanumeric characters.
   #
-  # Returns - TRUE if all checks pass
+  # @return [TrueClass, FalseClass]
+  #   true if all checks pass, else false.
   #
   def valid?(test_token)
     return false unless self.token == test_token
@@ -81,9 +76,11 @@ class PasswordRollbackRequest < ApplicationRecord
   #
   private
 
+  ##
   # Create and save a new token unless it is already present.
   #
-  # Returns - String token
+  # @return [String]
+  #   the encoded token
   #
   def generate_token!
     return token if token.present?
@@ -110,6 +107,7 @@ class PasswordRollbacksController < ApplicationController
   # ============================================================================
   #
   
+  ##
   # Render the password change form if it's a valid token
   #
   def show
@@ -117,6 +115,7 @@ class PasswordRollbacksController < ApplicationController
   end
 
 
+  ##
   # Update the new password if the form & token are valid
   #
   def update
@@ -152,14 +151,17 @@ class PasswordRollbacksController < ApplicationController
     @rollback_request = PasswordRollbackRequest.find_by(id: rollback_id)
     return false unless @rollback_request.present?
     return false unless @rollback_request.valid?
+    return false unless @rollback_request.user == @user
 
     return true
   end
 
 
+  ##
   # Check if the supplied form is valid
   #
-  # Returns true if valid, else false
+  # @return [TrueClass, FlaseClass]
+  #   true if valid, else false.
   #
   def valid_form?
     @user                       = @rollback_request.user

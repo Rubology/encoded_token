@@ -16,18 +16,11 @@ GEM
     irb (1.4.2)
       reline (>= 0.3.0)
     json (2.6.2)
-    nio4r (2.5.8)
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
-    psych (4.0.6)
-      stringio
-    puma (6.0.0)
-      nio4r (~> 2.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    rdoc (6.4.0)
-      psych (>= 4.0.0)
     regexp_parser (2.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -58,8 +51,6 @@ GEM
     rubocop-ast (1.21.0)
       parser (>= 3.1.1.0)
     ruby-progressbar (1.11.0)
-    sdoc (2.4.0)
-      rdoc (>= 5.0)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -69,23 +60,25 @@ GEM
       simplecov (~> 0.19)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    stringio (3.0.2)
     unicode-display_width (2.3.0)
+    webrick (1.7.0)
+    yard (0.9.28)
+      webrick (~> 1.7.0)
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
   debug
   encoded_token!
-  puma
   rake
   rspec
   rubocop
-  sdoc
   simplecov
   simplecov-cobertura
+  yard
 
 RUBY VERSION
    ruby 3.1.2p20

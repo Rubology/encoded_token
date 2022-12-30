@@ -11,16 +11,15 @@
 [//]: # "#####                 BADGES                  #####"
 [//]: # "###################################################"
 
-| Status | Main | Dev |
-| --- | --- |--- |
-| **License** | [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license) | [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license) |
-| **Gem Version** | [![Gem Version](https://badge.fury.io/rb/encoded_token.svg)](https://badge.fury.io/rb/encoded_token) | [![Gem Version](https://badge.fury.io/rb/encoded_token.svg)](https://badge.fury.io/rb/encoded_token) |
-| **Test Coverage** | [![Space Metric](https://rubology.testspace.com/spaces/159262/metrics/207965/badge?token=c621684ad592cf471071cfcb7e264c1b6a2aac5d)](https://rubology.testspace.com/spaces/159262/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)") | [![Space Metric](https://rubology.testspace.com/spaces/191047/metrics/297597/badge?token=82860e711a5e75c1cba0859399f9015f262281d7)](https://rubology.testspace.com/spaces/191047/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)")|
-| **Ruby Version** |![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=main)| ![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=dev)|
-| |![ruby 3.0](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-0.yml/badge.svg?branch=main) | ![ruby 3.0](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-0.yml/badge.svg?branch=dev) |
-| |![ruby 2.7](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-7.yml/badge.svg?branch=main) | ![ruby 2.7](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-7.yml/badge.svg?branch=dev) |
-| |![ruby 2.6](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-6.yml/badge.svg?branch=main) | ![ruby 2.6](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-6.yml/badge.svg?branch=dev) |
-| | ![ruby 2.5](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-5.yml/badge.svg?branch=main) | ![ruby 2.5](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-5.yml/badge.svg?branch=dev) |
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license)
+[![Gem Version](https://badge.fury.io/rb/encoded_token.svg)](https://badge.fury.io/rb/encoded_token)
+[![Space Metric](https://rubology.testspace.com/spaces/159262/metrics/207965/badge?token=c621684ad592cf471071cfcb7e264c1b6a2aac5d)](https://rubology.testspace.com/spaces/159262/current/Code%20Coverage?utm_campaign=badge&utm_medium=referral&utm_source=coverage "Code Coverage (lines)")
+
+![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=main)
+![ruby 3.0](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-0.yml/badge.svg?branch=main)
+![ruby 2.7](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-7.yml/badge.svg?branch=main)
+![ruby 2.6](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-6.yml/badge.svg?branch=main)
+![ruby 2.5](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-5.yml/badge.svg?branch=main)
 
 
 
@@ -56,8 +55,8 @@
 <a name='description'></a>
 ## Description
 
-**Encoded Tokens** are a more secure and efficient replacement for secure tokens,
-and used in features such as:
+**Encoded Token** is a more secure and efficient replacement for secure tokens.
+Used in features such as:
 
 - password reset links: `/password_resets/xxx_encoded_token_xxx`
 - email confirmation links: `/email_confirmations/xxx_encoded_token_xxx`
@@ -70,13 +69,13 @@ that can be used within a URL.
 
 When the application receives an incoming request, it decodes the 
 token and loads the record from the database using the decoded ID. 
-No searching needed!
+No searching or indexing needed!
 
 **EncodedToken** is more secure: removing the need to directly
 search the database with an insecure parameter,
 completely elliminates a potential SQL Injection attack vector.
 
-**EncodedToken** improves efficiency: reducing the number of
+**EncodedToken** is more efficient: reducing the number of
 database queries. Imagine being able to filter out all random 
 requests, and only hit the database when the token actually 
 contains an integer ID or string UUID.
@@ -87,10 +86,10 @@ creating new models to manage the token requests helps to
 keep everything RESTful and efficient. 
 (See the [Walkthrough Example](#walkthrough))
 
-**EncodedToken** only has **2 methods**! It really couldn't be 
-any simpler to use, and has the shortest learning curve ever!
+With **only 2 methods**, it really couldn't be 
+any simpler to use!
 
-_**>>> EncodedToken is pure Ruby and is framework agnostic.**_
+> _**>>> EncodedToken is pure Ruby and is framework agnostic. <<<**_
 
 ---
 

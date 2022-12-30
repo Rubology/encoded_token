@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require './ruby_version'
+
 #  Coverage
 # ======================================================================
 
@@ -34,8 +36,8 @@ require "encoded_token"
 #  Debug
 # ======================================================================
 
-# Only add 'debug' if Ruby 3.1 or higher
-if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.1')
+# Only add 'debug' if latest version of Ruby
+if RubyVersion.latest?
   require "debug"
 end
 

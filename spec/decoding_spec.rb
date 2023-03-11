@@ -72,7 +72,7 @@ RSpec.describe EncodedToken do
 
       end
       
-      context "with a :decrypt code failure" do
+      context "with a :_decrypt code failure" do
         it "fails with an invalid token error" do
           uuid          = SecureRandom.uuid
           token         = EncodedToken.encode(uuid)

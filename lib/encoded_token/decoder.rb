@@ -43,8 +43,8 @@ class EncodedToken
     def decode!(token)
       assert_valid_seed!
 
-      token = sanitize_token(token)
-      id    = parse_token(token)
+      token = _sanitize_token(token)
+      id    = _parse_token(token)
 
       # is it a UUID or numeric ID
       if valid_integer?(id) || valid_uuid_format?(id)
@@ -111,7 +111,7 @@ class EncodedToken
     #   We return a duplicate so the original is not changed later
     #   in the process when shifting segments.
     #
-    def sanitize_token(token)
+    def _sanitize_token(token)
       fail 'Token is not a string.'   unless token.is_a?(String)
       fail 'Invalid token characters' unless valid_token_text?(token)
       fail 'Invalid token cipher.'    unless __keylist.include?(token[0])
@@ -129,13 +129,13 @@ class EncodedToken
     # @return [String]
     #   the original ID.
     #
-    def parse_token(token)
+    def _parse_token(token)
       key      = token[0]
-      id_size  = decrypt_size(token[1,2], key)
+      id_size  = _decrypt_size(token[1,2], key)
       padding  = __ciphers[key][:padding]
       enc_id   = token[padding + 3, id_size]
 
-      return decrypt(enc_id, key)
+      return _decrypt(enc_id, key)
     end
 
 
@@ -149,8 +149,8 @@ class EncodedToken
     # @param [Character] key
     #   the cipher key to use.
     #
-    def decrypt_size(enc_size, key)
-      decrypt(enc_size, key).hex
+    def _decrypt_size(enc_size, key)
+      _decrypt(enc_size, key).hex
     end
 
 
@@ -173,7 +173,7 @@ class EncodedToken
     # @note
     #   The cipher is rotated with every character.
     #
-    def decrypt(enc_id, key)
+    def _decrypt(enc_id, key)
       id      = ""
       enc_key = key
 

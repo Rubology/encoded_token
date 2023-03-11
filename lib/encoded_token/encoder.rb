@@ -45,8 +45,8 @@ class EncodedToken
     #
     def encode!(id)
       assert_valid_seed!
-      assert_valid_id!(id)
-      generate_token(id)
+      _assert_valid_id!(id)
+      _generate_token(id)
     end
 
 
@@ -107,7 +107,7 @@ class EncodedToken
     # @raise [ArguementError]
     #   if the provided id is invalid
     #
-    def assert_valid_id!(id)
+    def _assert_valid_id!(id)
       sid = id.to_s
 
       fail     if sid.size < 1
@@ -135,25 +135,25 @@ class EncodedToken
     # @note
     #   Token composition is [key, id_size, left_padding, enc_id, right_padding].
     #
-    def generate_token(id)
+    def _generate_token(id)
       # stringify the id
       sid = id.to_s
 
       # select a random cipher key
       token  = key = __keylist.sample
 
-      # encrypt the id size
-      token += encrypt_size(sid, key)
+      # _encrypt the id size
+      token += _encrypt_size(sid, key)
 
       # generate the left padding
-      token += random_characters(__ciphers[key][:padding])
+      token += _random_characters(__ciphers[key][:padding])
 
-      # encrypt the id
-      token += encrypt(sid, key)
+      # _encrypt the id
+      token += _encrypt(sid, key)
 
       # generate right padding
       count  = (__target_size - token.size).clamp(0, __target_size)
-      token += random_characters(count)
+      token += _random_characters(count)
 
       # return the new token
       return token
@@ -176,10 +176,10 @@ class EncodedToken
     # @note
     #   We convert to hex to allow for strings up to 255 chars.
     #
-    def encrypt_size(id, key)
+    def _encrypt_size(id, key)
       hex_size = id.size.to_s(16).rjust(2, '0')
 
-      encrypt(hex_size, key)
+      _encrypt(hex_size, key)
     end
 
 
@@ -199,7 +199,7 @@ class EncodedToken
     # @note
     #   We rotate the cipher every character to avoid sequential values like id: 1000.
     #
-    def encrypt(id, key)
+    def _encrypt(id, key)
       enc_id       = []
       encipher_key = key
 
@@ -224,7 +224,7 @@ class EncodedToken
     # @return [String]
     #   a string with the required number of random characters.
     #
-    def random_characters(size)
+    def _random_characters(size)
       SecureRandom.alphanumeric(size)
     end
 

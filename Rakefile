@@ -7,9 +7,7 @@ task default: :test
 
 desc "Runs the latest tests."
 task :test do
-  require "rspec/core/rake_task"
-  RSpec::Core::RakeTask.new(:spec)
-  Rake::Task[:spec].invoke
+  system "WITH_COVERAGE=true BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec rspec spec"
 end
 
 
@@ -41,17 +39,9 @@ end
 
 desc "Opens the coverage results in the default browser."
 task :coverage do
-  require "rspec/core/rake_task"
-  RSpec::Core::RakeTask.new(:spec)
+  Rake::Task["test"].invoke
 
-  unless RubyVersion.latest?
-    fail "\nCoverage only available in Ruby #{RubyVersion.latest_version}\n\n"
-  end
-
-  ENV["COVERAGE"] = 'true'
-  Rake::Task[:spec].invoke
-
-  unless ENV['FOR_TESTSPACE']
+  unless ENV['GITHUB_ACTION']
     `open coverage/index.html`
   end
 end
@@ -91,7 +81,3 @@ task :rubo do
                 ]
   system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec rubocop --autocorrect --only #{corrections.join(',')} lib/"
 end
-
-
-
-

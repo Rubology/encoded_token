@@ -5,23 +5,31 @@ require './ruby_version'
 #  Coverage
 # ======================================================================
 
-# Only calculate coverage if requested
-if ENV['COVERAGE'] == 'true'
-  require 'simplecov'
-  
-  SimpleCov.configure do
-    # exclude tests
-    add_filter 'spec'
+# Only calculate coverage when requested
+if ENV['WITH_COVERAGE']
+  puts "\nCoverage requested."
+  begin
+    require 'simplecov'
+
+    SimpleCov.configure do
+      # exclude tests
+      add_filter 'spec'
+    end
+
+    # if ENV['FAIL_ON_MINIMUM']
+    #   SimpleCov.minimum_coverage 100
+    # end
+
+    # start it up
+    SimpleCov.start
+
+  rescue LoadError
+    puts "\n *** Coverage required, but SimpleCov gem not available! ***"
+
+  ensure
+    # clear the WITH_COVERAGE environmental variable
+    ENV.delete 'WITH_COVERAGE'
   end
-  
-  # set output to Coberatura XML if using Testspace analysis
-  if ENV['FOR_TESTSPACE']
-    require 'simplecov-cobertura'
-    SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
-  end
-  
-  # start it up
-  SimpleCov.start
 end
 
 

@@ -12,7 +12,7 @@ gemspec :path => '../..'
 
 gem "rake"
 gem "rspec"
-gem "yard"
+gem "yard", ">= 0.9.36"
 gem 'simplecov'
 gem 'simplecov-cobertura'
 gem 'rubocop'

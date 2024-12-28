@@ -8,11 +8,11 @@ RSpec.describe EncodedToken do
   # ======================================================================
   #  Decoding
   # ======================================================================
-  
+
   describe 'decoding' do
-    before(:each) {  
+    before(:each) {
       EncodedToken::Base.class_variable_set :@@seed, nil
-      EncodedToken.seed = 123 
+      EncodedToken.seed = 123
     }
 
 
@@ -25,7 +25,7 @@ RSpec.describe EncodedToken do
         EncodedToken.decode(token)
       end
 
-            
+
       context 'with a valid ID token' do
         it 'returns the correct String ID' do
           id     = '12345'
@@ -62,16 +62,16 @@ RSpec.describe EncodedToken do
           uuid          = SecureRandom.uuid
           token         = EncodedToken.encode(uuid)
           changed_token = token
-          
+
           # remove the middle character
           mid = token.size/2
           changed_token[mid] = 'ê'
-                   
+
           expect(EncodedToken.decode(changed_token)).to be_nil
         end
 
       end
-      
+
       context "with a :_decrypt code failure" do
         it "fails with an invalid token error" do
           uuid          = SecureRandom.uuid
@@ -87,18 +87,18 @@ RSpec.describe EncodedToken do
           expect(EncodedToken.decode(token)).to be_nil
         end
       end
-      
+
       context "with a valid token built with a different seed" do
         it "returns the wrong UUID" do
           uuid          = SecureRandom.uuid
           token         = EncodedToken.encode(uuid)
 
           EncodedToken::Base.class_variable_set :@@seed, nil
-          EncodedToken.seed = 124 
+          EncodedToken.seed = 124
 
           expect(EncodedToken.decode(token)).not_to eq uuid
         end
-      end  
+      end
 
       context "with a token with an invalid cipher key" do
         it "returns the wrong UUID" do
@@ -110,7 +110,7 @@ RSpec.describe EncodedToken do
           token[0]    = missing_key
           expect(EncodedToken.decode(token)).to be_nil
         end
-      end  
+      end
     end #:decode
 
 
@@ -125,6 +125,15 @@ RSpec.describe EncodedToken do
       it 'raises the original error with a non-Integer' do
         expect{EncodedToken.decode!(:a)}
           .to raise_error(RuntimeError, /Token is not a string/)
+      end
+
+      it 'returns nil with a non-integer and non-uuid' do
+        token = EncodedToken.encode(12345)
+
+        allow(EncodedToken).to receive(:valid_integer?)     { false }
+        allow(EncodedToken).to receive(:valid_uuid_format?) { false }
+
+        expect(EncodedToken.decode!(token)).to eq nil
       end
     end
 

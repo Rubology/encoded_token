@@ -2,7 +2,7 @@
 
 class EncodedToken
   ##
-  # EncodedToken::Encoder
+  # EncodedToken::Decoder
   #
   # This module contains the methods for decoding a token.
   #
@@ -191,4 +191,3 @@ class EncodedToken
 
   end #module
 end #class
-

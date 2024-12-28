@@ -13,6 +13,7 @@
 
 | Main Branch| Dev Branch|
 |---|---|
+| ![ruby 3.4](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-4.yml/badge.svg?branch=main) | ![ruby 3.4](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-4.yml/badge.svg?branch=dev) |
 | ![ruby 3.3](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-3.yml/badge.svg?branch=main) | ![ruby 3.3](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-3.yml/badge.svg?branch=dev) |
 | ![ruby 3.2](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-2.yml/badge.svg?branch=main) | ![ruby 3.2](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-2.yml/badge.svg?branch=dev) |
 | ![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=main) | ![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=dev) |

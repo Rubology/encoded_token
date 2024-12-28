@@ -1,4 +1,4 @@
 lib/encoded_token.rb 85ad93946703babb243f27283f93c6368df74983
 lib/encoded_token/base.rb 0285370640d74ef1df657bb8294e70eda49ce052
-lib/encoded_token/decoder.rb dfa3216a768bcff19025ea1bfa6fb708f947913f
+lib/encoded_token/decoder.rb eaf7a64fcf966d9bb7ad1386ded8bbd761c82eb2
 lib/encoded_token/encoder.rb 1651abcc6372156cbfd0553ca313e5bf899cf17c

@@ -7,7 +7,11 @@ task default: :test
 
 desc "Runs the latest tests."
 task :test do
-  system "WITH_COVERAGE=true BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle _2.3.26_ exec rspec spec"
+  if RubyVersion.latest?
+    system "WITH_COVERAGE=true BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec rspec spec"
+  else
+    system "BUNDLE_GEMFILE=#{RubyVersion.gemfile} bundle exec rspec spec"
+  end
 end
 
 

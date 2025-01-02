@@ -11,20 +11,16 @@
 [//]: # "#####                 BADGES                  #####"
 [//]: # "###################################################"
 
-| Main Branch| Dev Branch|
-|---|---|
-| ![ruby 3.4](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-4.yml/badge.svg?branch=main) | ![ruby 3.4](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-4.yml/badge.svg?branch=dev) |
-| ![ruby 3.3](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-3.yml/badge.svg?branch=main) | ![ruby 3.3](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-3.yml/badge.svg?branch=dev) |
-| ![ruby 3.2](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-2.yml/badge.svg?branch=main) | ![ruby 3.2](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-2.yml/badge.svg?branch=dev) |
-| ![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=main) | ![ruby 3.1](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-1.yml/badge.svg?branch=dev) |
-| ![ruby 3.0](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-0.yml/badge.svg?branch=main) | ![ruby 3.0](https://github.com/Rubology/encoded_token/actions/workflows/ruby-3-0.yml/badge.svg?branch=dev) |
-| ![ruby 2.7](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-7.yml/badge.svg?branch=main) | ![ruby 2.7](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-7.yml/badge.svg?branch=dev) |
-| ![ruby 2.6](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-6.yml/badge.svg?branch=main) | ![ruby 2.6](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-6.yml/badge.svg?branch=dev) |
-| ![ruby 2.5](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-5.yml/badge.svg?branch=main) | ![ruby 2.5](https://github.com/Rubology/encoded_token/actions/workflows/ruby-2-5.yml/badge.svg?branch=dev) |
-| &nbsp; |  |
-| [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license)  | [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license) |
-| [![Gem Version](https://badge.fury.io/rb/encoded_token.svg)](https://badge.fury.io/rb/encoded_token) | [![Gem Version](https://badge.fury.io/rb/encoded_token.svg)](https://badge.fury.io/rb/encoded_token) |
-| ![100% Coverage](https://github.com/Rubology/state_gate/actions/workflows/code_coverage.yml/badge.svg?branch=main) | ![100% Coverage](https://github.com/Rubology/state_gate/actions/workflows/code_coverage.yml/badge.svg?branch=dev) |
+## Status
+
+![Build](https://github.com/Rubology/encoded_token/actions/workflows/build.yml/badge.svg?branch=dev) 
+&nbsp;
+![100% Test Coverage](https://github.com/Rubology/state_gate/actions/workflows/code_coverage.yml/badge.svg?branch=dev)
+&nbsp;
+[![Gem Version](https://badge.fury.io/rb/encoded_token.svg)](https://badge.fury.io/rb/encoded_token)
+&nbsp;
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](#license)
+
 
 
 

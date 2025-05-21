@@ -1,6 +1,6 @@
 AllCops:
   UseCache: false
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.7
   Exclude:
     - spec/*
 
@@ -22,7 +22,7 @@ Layout/EmptyLinesAroundModuleBody:
 
 
 Layout/EmptyLineBetweenDefs:
-  NumberOfEmptyLines: 3
+  NumberOfEmptyLines: 1
 
 
 Layout/HashAlignment:

@@ -12,7 +12,7 @@ a new password.
 1. We already have a User model defined with `:name` and `:email` attributes.
 2. The rollback link will be valid for one hour.
 3. Our application framework is Ruby on Rails
-4. We've set our environment variable: `ENCODED_TOKEN_SEED="12345"`
+4. We've set our configurtion seed to `12345`
 5. Our link route is: `get '/password_rollbacks/:token', to: 'password_rollbacks#show'`.
 6. Our reset route is: `patch '/password_rollbacks/:token', to: 'password_rollbacks#update'`
 7. To improve security we don't want our user's id to appear in the token.
@@ -200,10 +200,3 @@ model and adding yet more methods to the `UserController`.
 
 While this example uses the Ruby on Rails framework, **EncodedToken**
 is coded in pure Ruby and is completely framework agnostic.
-
-
-
-
-
-
-

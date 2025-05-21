@@ -3,3 +3,10 @@
 
 # rspec failure tracking
 .rspec_status
+/.idea/*
+/.irbrc
+
+
+.run/
+
+mise.toml

@@ -1,0 +1,54 @@
+V1
+
+seed: 123
+uuid: "e6934ba1-54c6-46ba-81a8-93e659c83433"
+token: "5LhcKDzdDCg5xOw6Fir5Clb7ms5V6GE7V8HFatSZBjuepha6mpQ2yiZ"
+clean: "5Lh*********xOw6Fir5Clb7ms5V6GE7V8HFatSZBjuepha6*******"
+
+keylist: ["2", "3", "4", "5", "9", "B", "G", "J", "K", "m", "N", "p", "u", "X", "Y", "Z"]
+
+ciphers:
+{"2" => {padding: 0, cipher_text: "LqlhEBmbVc9vPfy68QKgRG3"},
+ "3" => {padding: 2, cipher_text: "xdG6Ka3i2jwouNtWHZMp4Bs"},
+ "4" => {padding: 4, cipher_text: "DcUa5MHwWtXnu1f3VIEmb76"},
+ "5" => {padding: 9, cipher_text: "DGA6f8VBeixpOwkrHTzthUn"},
+ "9" => {padding: 0, cipher_text: "5FLpOkKwRWa61exjbo2Vld3"},
+ "B" => {padding: 3, cipher_text: "7Dq9hxOrIVGPAW0nufjN2Zw"},
+ "G" => {padding: 9, cipher_text: "GYPahN7MmwHetB1ClOTgfUE"},
+ "J" => {padding: 6, cipher_text: "Taj6fvyi7c03BEY8P5DGHVq"},
+ "K" => {padding: 5, cipher_text: "MVb5FC2gnBcl07h3HPTG4KD"},
+ "m" => {padding: 10, cipher_text: "2KcbVBvG3Y8iaMLSyJUotZq"},
+ "N" => {padding: 10, cipher_text: "nF0sS1OzH3r6UR9tDJy87BG"},
+ "p" => {padding: 10, cipher_text: "R5nzH6ENqMAOLPfTxD4tkUF"},
+ "u" => {padding: 7, cipher_text: "DoTmWjzqJafQtMrENK1dBGC"},
+ "X" => {padding: 7, cipher_text: "gvetnlyJG0QMqdKhS9wYBWa"},
+ "Y" => {padding: 3, cipher_text: "W7CtbiTleFZIfdSsK8B1hRA"},
+ "Z" => {padding: 2, cipher_text: "r0MNAnZDCcFQ7sUGu829P1S"}
+
+
+seed: 123
+id: 12345
+token: "JMBdXwBbCVcsHjQdAHAPLSlUVELQoeXeu6EeJBTyijeSWovreZh8nO6"
+clean: "JMB******VcsHj*****************************************"
+
+keylist: ["2", "3", "4", "5", "9", "B", "G", "J", "K", "m", "N", "p", "u", "X", "Y", "Z"]
+
+ciphers:
+{"2" => {padding: 0, cipher_text: "LqlhEBmbVc9vPfy68QKgRG3"},
+ "3" => {padding: 2, cipher_text: "xdG6Ka3i2jwouNtWHZMp4Bs"},
+ "4" => {padding: 4, cipher_text: "DcUa5MHwWtXnu1f3VIEmb76"},
+ "5" => {padding: 9, cipher_text: "DGA6f8VBeixpOwkrHTzthUn"},
+ "9" => {padding: 0, cipher_text: "5FLpOkKwRWa61exjbo2Vld3"},
+ "B" => {padding: 3, cipher_text: "7Dq9hxOrIVGPAW0nufjN2Zw"},
+ "G" => {padding: 9, cipher_text: "GYPahN7MmwHetB1ClOTgfUE"},
+ "J" => {padding: 6, cipher_text: "Taj6fvyi7c03BEY8P5DGHVq"},
+ "K" => {padding: 5, cipher_text: "MVb5FC2gnBcl07h3HPTG4KD"},
+ "m" => {padding: 10, cipher_text: "2KcbVBvG3Y8iaMLSyJUotZq"},
+ "N" => {padding: 10, cipher_text: "nF0sS1OzH3r6UR9tDJy87BG"},
+ "p" => {padding: 10, cipher_text: "R5nzH6ENqMAOLPfTxD4tkUF"},
+ "u" => {padding: 7, cipher_text: "DoTmWjzqJafQtMrENK1dBGC"},
+ "X" => {padding: 7, cipher_text: "gvetnlyJG0QMqdKhS9wYBWa"},
+ "Y" => {padding: 3, cipher_text: "W7CtbiTleFZIfdSsK8B1hRA"},
+ "Z" => {padding: 2, cipher_text: "r0MNAnZDCcFQ7sUGu829P1S"}}
+
+

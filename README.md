@@ -65,30 +65,26 @@ Used in features such as:
 - file sharing links: `/file_shares/xxx_encoded_token_xxx`
 - password rollback links: `/password_rollbacks/xxx_encoded_token_xxx`
 
-**EncodedToken** works by encoding a record's ID, or UUID, into a token string 
-that can be used within a URL.
+**EncodedToken** lets you encode a record's ID, UUID, or any UTF-8 string into a 
+URL safe token.
 
 When the application receives an incoming request, it decodes the 
-token and loads the record from the database using the decoded ID. 
+token and loads the record from the database using the decoded data. 
 No searching or indexing needed!
 
-**EncodedToken** is more secure: removing the need to directly
-search the database with an insecure parameter,
-completely elliminates a potential SQL Injection attack vector.
+**EncodedToken** is more secure: 
+- Never searching the database for a token, eliminates any 
+  potential SQL Injection attack vector.
+- CRC Cheksum ensures the token received, is the same token that was sent.
+- Random guesses would have to match not only the token, but also the ID of the record using that token.
 
-**EncodedToken** is more efficient: reducing the number of
-database queries. Imagine being able to filter out all random 
-requests, and only hit the database when the token actually 
-contains an integer ID or string UUID.
+**EncodedToken** is more efficient: 
+- Never searching the database for a token reduces the amount of database interaction.
+- No need to index token columns on the DB.
+- Response times for invalid tokens are reduced.
 
-**EncodedToken** promotes best practice: because there is
-an inherent reluctance to include a user's ID in a public URL, 
-creating new models to manage the token requests helps to 
-keep everything RESTful and efficient. 
-(See the [Walkthrough Example](#walkthrough))
-
-With **only 2 methods**, it really couldn't be 
-any simpler to use!
+**EncodedToken** is simple to use:
+- With only `encode` and `decode` methods, it really couldn't be any simpler to use!
 
 > _**>>> EncodedToken is pure Ruby and is framework agnostic. <<<**_
 
@@ -102,7 +98,7 @@ any simpler to use!
 <a name='requirements'></a>
 ## Requirements
 
-- Ruby 2.5+
+- Ruby 2.6+
 
 
 
@@ -120,7 +116,9 @@ Add this line to your Gemfile:
 
 `gem 'encoded_token'`
 
+or install directly with:
 
+`gem install 'encoded_token'`
 
 ---
 
@@ -147,23 +145,21 @@ All changes can be found in the [ChangeLog](CHANGELOG.md) file.
 Before use, **EncodedToken** needs to be configured with an integer seed, of at
 least five characters in length, which it uses to generate the encryption ciphers.
 
-The seed may only be set once, either with an environment variable:
-
-```shell
-ENV['ENCODED_TOKEN_SEED']="12345"
-```
-
-... or directly with:
+The seed is set from within a configuration file.
 
 ```ruby
-EncodedToken.seed = 12345
+EncodedToken.configure do |config|
+  config.seed = 12345
+end
 ```
 
+... or preferably, with an environment variable:
 
-### WARNING:
-> _**>>> Changing the seed will invalidate any tokens generated from a previous seed! <<<**_
-
-
+```ruby
+EncodedToken.configure do |config|
+  config.seed = ENV['ENCODED_TOKEN_SEED']
+end
+```
 
 ---
 
@@ -174,26 +170,25 @@ EncodedToken.seed = 12345
 
 <a name='encoding'></a>
 ## Encoding
-Tokens are produced by encoding an ID. The ID can be:
-
-- a String UUID, such as "4ef2091f-023b-4af6-9e9f-f46465f897ba"
-- an Integer ID, such as 12345
-- a String integer, such as "12345"
+Tokens are produced by encoding any integer or UTF-8 String. For example:
 
 ```ruby
 EncodedToken.encode(12345)
-  #=> "b4ex6AEB62jlBGpVAGNou8iRmD7pnHGHafQlAHB7w0J"
+  #=> "po2y8BBXHh5v32xW8wpI66kgIxzHCZ9YcTjoAq3kkl_"
     
 EncodedToken.encode("12345")
-  #=> "oTyhEKYsv7rueZt87wPTgJqlnATC7cittp0ncawkupTF1amtV"
+  #=> "pTJy8BBXHh5v32xW8wnoOlN9yxsoUZgY4IpngdNgyP7o_"
     
 EncodedToken.encode("4ef2091f-023b-4af6-9e9f-f46465f897ba")
-  #=> "c0WKM0w75r7cfMIrqfIMn374f1rcrff7171UfjrB34JsJd4zBB"
+  #=> "pYnycDBbdNSU3ixAqGUdHt7MHi5z3fjTAKU2Hjp6HUP33pjWqG9f9dp6HA5U32xoqH9fFDBnHDSz8FQ0cWpndw3MyxWIKU_"
+
+EncodedToken.encode( {a: 1, b: 2} )
+  #=> "pW2yVDjSdM51OyxfATDyHEBAZi5zNCVmgV3qRMEMIjZhCUrbc_"
 ```
 
 ### On Error
 - with `:encode`  - an invalid ID will raise an `ArgumentError`
-- with `:encode!` - an invalid ID will raise the original `RuntimeError`exception.
+- with `:encode!` - an invalid ID will raise the original `RuntimeError` exception.
 
 ```ruby
 EncodedToken.encode(:test)
@@ -217,14 +212,17 @@ EncodedToken.encode!(:test)
 Encoded tokens are decoded to return a String of the original ID
 
 ```ruby
-EncodedToken.decode("b4ex6AEB62jlBGpVAGNou8iRmD7pnHGHafQlAHB7w0J")
+EncodedToken.decode("po2y8BBXHh5v32xW8wpI66kgIxzHCZ9YcTjoAq3kkl_")
   #=> "12345"
 
-EncodedToken.decode("oTyhEKYsv7rueZt87wPTgJqlnATC7cittp0ncawkupTF1amtV")
+EncodedToken.decode("pTJy8BBXHh5v32xW8wnoOlN9yxsoUZgY4IpngdNgyP7o_")
   #=> "12345"
 
-EncodedToken.decode("c0WKM0w75r7cfMIrqfIMn374f1rcrff7171UfjrB34JsJd4zBB")
+EncodedToken.decode("pYnycDBbdNSU3ixAqGUdHt7MHi5z3fjTAKU2Hjp6HUP33pjWqG9f9dp6HA5U32xoqH9fFDBnHDSz8FQ0cWpndw3MyxWIKU_")
   #=> "4ef2091f-023b-4af6-9e9f-f46465f897ba"
+
+EncodedToken.decode("pW2yVDjSdM51OyxfATDyHEBAZi5zNCVmgV3qRMEMIjZhCUrbc_")
+  #=> "{a: 1, b: 2}"
 ```
 
 ### On Error
@@ -361,5 +359,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-

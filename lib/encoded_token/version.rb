@@ -1,24 +1,26 @@
 # frozen_string_literal: true
 
-class EncodedToken
+module EncodedToken
 
   ##
-  # The EncodedToken gem version.
+  # Returns the gem version.
   #
   # @return [Gem::Version]
-  #   the version of the currently loaded EncodedToken as a <tt>Gem::Version</tt>
   #
   def self.gem_version
     Gem::Version.new VERSION::STRING
   end
 
-
-
+  ##
+  # EncodedToken::VERSION
+  #
+  #   This module represent the current version.
+  #
   module VERSION
 
-    MAJOR = 1
+    MAJOR = 2
     MINOR = 0
-    TINY  = 2
+    TINY  = 0
     # MICRO = ''
 
     STRING = [MAJOR, MINOR, TINY].compact.join(".")

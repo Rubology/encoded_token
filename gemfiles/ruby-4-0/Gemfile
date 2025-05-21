@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+# add linux platform with: bundle lock --add-platform x86_64-linux
+
+source "https://rubygems.org"
+
+# specify ruby version
+ruby '~> 4.0.0'
+
+# Specify your gem's dependencies in encoded_token.gemspec
+gemspec :path => '../..'
+
+gem 'minitest'
+gem 'mocha'
+gem "yard", ">= 0.9.36"
+gem "redcarpet"
+gem 'simplecov'
+gem 'simplecov-cobertura'
+gem 'rubocop'
+gem "debug"

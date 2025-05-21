@@ -10,5 +10,5 @@ ruby '~> 2.6.0'
 # Specify your gem's dependencies in encoded_token.gemspec
 gemspec :path => '../..'
 
-gem "rake"
-gem "rspec"
+gem 'minitest'
+gem 'mocha'

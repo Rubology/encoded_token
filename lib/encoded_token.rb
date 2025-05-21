@@ -1,15 +1,29 @@
 # frozen_string_literal: true
 
+require          "date"
+require          "securerandom"
+require_relative "encoded_token/error_messages.rb"
+require_relative "encoded_token/cipher.rb"
+require_relative "encoded_token/utils.rb"
+require_relative "encoded_token/configuration.rb"
+require_relative "encoded_token/encryptor.rb"
+require_relative "encoded_token/encoder"
+require_relative "encoded_token/encoder/legacy_encoder.rb"
+require_relative "encoded_token/encoder/legacy_decoder.rb"
+require_relative "encoded_token/encoder/utf8_encoder.rb"
+require_relative "encoded_token/encoder/utf8_decoder.rb"
+require_relative "encoded_token/version.rb"
+
 ##
 # = EncodedToken
 #
-# Encodes a UUID or numeric ID to produce a Secure Token,
-# then decodes the Secure Token to return the origianl ID.
+# Encodes a UTF-8 String to produce a Secure Token,
+# then decodes the Secure Token to return the original input.
 #
-# - The given ID is encoded using a substitution cipher, then padded
+# - The given input is encoded using a substitution cipher, then padded
 #   with alphanumeric characters to a random length.
 #
-# - Multiple substituion ciphers are used to improve security.
+# - Multiple substitution ciphers are used to improve security.
 #
 # *examples:*
 #
@@ -19,32 +33,114 @@
 #   EncodedToken.decode("b4ex6AEB62jlBGpVAGNou8iRmD7pnHGHafQlAHB7w0J")
 #   # => "12345"
 #
-class EncodedToken
-
+module EncodedToken
+  
+  # ======================================================================
+  # = Macros
+  # ======================================================================
+  
+  extend ErrorMessages
 
   # ======================================================================
-  #  Macros
+  # = Class Methods
   # ======================================================================
+  
+  class << self
 
-  require            "securerandom"
-  require_relative   "encoded_token/base.rb"
-  require_relative   "encoded_token/encoder.rb"
-  require_relative   "encoded_token/decoder.rb"
+    ##
+    # Returns the configuration instance.
+    #
+    # @return [Configuration]
+    #   a memoized instance of the Configuration class.
+    #
+    def configuration
+      @configuration ||= Configuration.instance
+    end
 
-  extend EncodedToken::Base
-  extend EncodedToken::Encoder
-  extend EncodedToken::Decoder
+    ##
+    # Applies the provided block to the configuration and builds the ciphers.
+    #
+    # @yield [block]
+    #   a configuration block
+    #
+    # @return [void]
+    #
+    # @example
+    #   EncodedToken.configure do |config|
+    #     config.seed = 12345
+    #   end
+    #
+    def configure
+      yield(configuration)
 
+      Encoder.build_ciphers!
+    end
 
-  # ======================================================================
-  #  Public Instance Methods
-  # ======================================================================
+    ##
+    # Encodes a given input to an encoded token.
+    #
+    # @param [Integer, String, *.to_s] input
+    #   any object that responds to '.to_s'
+    # @param [:utf8, :legacy] encoder
+    #   the encoder to use.
+    #
+    # @return [String] if successful
+    # @return [nil]    if unsuccessful
+    #
+    def encode(input, encoder = :utf8)
+      Encoder.encode(input, encoder)
+    end
 
-  ##
-  # This is an abstract class, so we ensure no instantiation
-  #
-  def initialize # :nodoc:
-    raise NotImplementedError.new("SecureToken is an abstract class and cannot be instantiated.")
-  end
+    ##
+    # Encodes a given input to an encoded token, raising an exception
+    # if encountered
+    #
+    # @param [Integer, String, *.to_s] input
+    #   any object that responds to '.to_s'
+    # @param [:utf8, :legacy] encoder
+    #   the encoding to use.
+    #
+    # @return [String] the encoded token
+    #
+    # @raise [ArgumentError, RuntimeError]
+    #   if the encoding fails
+    #
+    def encode!(input, encoder = :utf8)
+      Encoder.encode!(input, encoder)
+    end
 
-end #class
+    
+    ##
+    # Decodes a given token to the original string
+    #
+    # @param [String] token
+    #   an encoded-token string
+    #
+    # @return [String]
+    #   the decoded value if successful
+    # @return [nil]
+    #   if unsuccessful
+    #
+    def decode(token)
+      Encoder.decode(token)
+    end
+
+    
+    ##
+    # Decodes a given token to the original string, raising an exception
+    # if encountered
+    #
+    # @param [String] token
+    #   an encoded-token string
+    #
+    # @return [String]
+    #   the decoded value
+    #
+    # @raise [ArgumentError, RuntimeError]
+    #   if the decoding fails
+    #
+    def decode!(token)
+      Encoder.decode!(token)
+    end
+  end # class << self
+end #module

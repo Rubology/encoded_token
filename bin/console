@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+lib = File.expand_path("../lib", __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 # set the gemfile to use
 segments = Gem::Version.new(RUBY_VERSION).segments
-gemfile  = "ruby-#{segments[0]}-#{segments[1]}.gemfile"
+gemfile  = "gemfiles/ruby-#{segments[0]}-#{segments[1]}/Gemfile"
 ENV['BUNDLE_GEMFILE']=gemfile
 
 require "bundler/setup"
@@ -17,4 +20,5 @@ require "encoded_token"
 # Pry.start
 
 require "irb"
+require "irb/completion"
 IRB.start(__FILE__)
